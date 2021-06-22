@@ -3,11 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/skysoft-atm/assignement/adexp"
-	"github.com/skysoft-atm/assignement/transport"
+
+	"github.com/florian74/assignement/adexp"
+	"github.com/florian74/assignement/transport"
 )
 
-var destAddr = flag.String("addrdest", "0.0.0.0:6669", "ip and port to send messages to (ie 127.0.0.5:6669)")
+//var destAddr = flag.String("addrdest", "0.0.0.0:6669", "ip and port to send messages to (ie 127.0.0.5:6669)")
+var destAddr = flag.String("addrdest", "0.0.0.0:8080", "ip and port to send messages to (ie 127.0.0.5:6669)")
 
 func main() {
 	flag.Parse()

@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+
+    redis:
+        image: docker.io/library/redis:6.0.6
+        container_name: redis
+        hostname: 'redis'
+        restart: always
+        environment:
+        - TZ=Europe/Zurich
+        - REDIS_AUTHENTICATION_PASSWORD=123456
+        command: redis-server --requirepass ${REDIS_AUTHENTICATION_PASSWORD}
+        ports:
+        - "3000:6379"
+        volumes:
+        - redis-skysoft:/data
+        - ./conf/redis.conf:/usr/local/etc/redis/config/redis.conf:ro
+
+
+    fplserver:
+        build: .
+        ports:
+            - "6669:8080"
+            - "6666:8081"
