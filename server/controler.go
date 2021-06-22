@@ -21,20 +21,28 @@ func (controller Controller) HandlePut(buf []byte, rlen int, count int) {
 
 func (controller Controller) HandleSearch(w http.ResponseWriter, req *http.Request) {
 
-	id := strings.TrimPrefix(req.URL.Path, "/provisions/")
+	fmt.Println("search request detected")
+
+	id := strings.TrimPrefix(req.URL.Path, "/flight/")
+
+	var typeSearch string
+	var value string
 
 	if !strings.Contains(id, "/") {
-		panic("unexpected url")
+		typeSearch = id
+		value = ""
+	} else {
+		typeSearch = strings.Split(id, "/")[0]
+		value = strings.Split(id, "/")[1]
 	}
 
-	var typeSearch = strings.Split(id, "/")[0]
-	var value = strings.Split(id, "/")[1]
+	fmt.Println("looking for " + typeSearch + " and value " + value)
 
 	allValues := getAllKeys()
 	var result = make([]Fpl, 0)
 
 	for i := 0; i < len(allValues); i++ {
-		if strings.Contains(getField(&allValues[i], typeSearch), value) {
+		if strings.HasPrefix(getField(&allValues[i], typeSearch), value) || value == "" {
 			result = append(result, allValues[i])
 		}
 	}

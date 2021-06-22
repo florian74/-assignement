@@ -8,17 +8,15 @@ services:
         restart: always
         environment:
         - TZ=Europe/Zurich
-        - REDIS_AUTHENTICATION_PASSWORD=123456
-        command: redis-server --requirepass ${REDIS_AUTHENTICATION_PASSWORD}
+        command: redis-server --requirepass 123456
         ports:
         - "3000:6379"
         volumes:
-        - redis-skysoft:/data
         - ./conf/redis.conf:/usr/local/etc/redis/config/redis.conf:ro
 
 
     fplserver:
         build: .
         ports:
-            - "6669:8080"
-            - "6666:8081"
+            - "6669:8080/udp"
+            - "4201:8081"

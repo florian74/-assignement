@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	adexp "github.com/florian74/assignement/adexp"
 
@@ -14,8 +15,11 @@ var ctx = context.Background()
 type Fpl = adexp.Fpl
 
 func pushToRedis(fpl Fpl) {
+
+	fmt.Println("pushing to redis: " + fpl.IfplId)
+
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:3000",
+		Addr:     "redis:6379",
 		Password: "123456",
 		DB:       0, // use default DB
 	})
@@ -28,7 +32,7 @@ func pushToRedis(fpl Fpl) {
 
 func getFromRedis(fplId string) Fpl {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:3000",
+		Addr:     "redis:6379",
 		Password: "123456",
 		DB:       0, // use default DB
 	})
@@ -45,7 +49,7 @@ func getFromRedis(fplId string) Fpl {
 
 func deleteFromRedis(fplId string) {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:3000",
+		Addr:     "redis:6379",
 		Password: "123456",
 		DB:       0, // use default DB
 	})
@@ -61,7 +65,7 @@ func deleteFromRedis(fplId string) {
 
 func getAllKeys() []Fpl {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:3000",
+		Addr:     "redis:6379",
 		Password: "123456",
 		DB:       0, // use default DB
 	})
@@ -70,7 +74,7 @@ func getAllKeys() []Fpl {
 	ret := make([]Fpl, len(vals))
 	for i := 0; i < len(vals); i++ {
 		if vals[i] != "" {
-			ret[i] = fromJson(vals[i])
+			ret[i] = getFromRedis(vals[i])
 		}
 	}
 	return ret

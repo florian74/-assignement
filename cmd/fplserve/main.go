@@ -10,12 +10,14 @@ import (
 
 func main() {
 
+	fmt.Println("server start TCP")
 	var controller server.Controller
-	http.HandleFunc("/flight/", controller.HandleSearch)
-	http.ListenAndServe(":8081", nil)
+	go asyncListenAndServe(controller)
 
+	fmt.Println("server start UDP")
 	addr, _ := net.ResolveUDPAddr("udp", ":8080")
 	sock, _ := net.ListenUDP("udp", addr)
+	fmt.Println("server start listening udp on 8080")
 
 	i := 0
 	for {
@@ -31,4 +33,11 @@ func main() {
 		controller.HandlePut(buf, rlen, i)
 	}
 
+}
+
+func asyncListenAndServe(controller server.Controller) {
+	fmt.Println("server start listening http on 8081")
+	http.HandleFunc("/flight/", controller.HandleSearch)
+	http.ListenAndServe(":8081", nil)
+	fmt.Println("server stop listening http on 8081")
 }

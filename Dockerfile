@@ -1,6 +1,7 @@
 FROM golang:1.14
 
 ENV GOPATH=/go
+ENV GOBIN=/go/bin
 
 WORKDIR $GOPATH/src/assignement
 
@@ -10,14 +11,16 @@ COPY . .
 # Copy and download dependency using go mod
 RUN go get -d -v ./...
 
-RUN echo `ls -R src`
-
 # Build the application
-RUN go build ./...
+RUN go install ./...
+#RUN go install github.com/florian74/assignement/cmd/...
 
 
 # This container exposes port 8080 to the outside world
 EXPOSE 8080 8081
 
 # Run the executable
-CMD ["/cmd/fplserve"]
+
+
+RUN ["chmod", "+x", "/go/bin/fplserve"]
+CMD ["fplserve"]
