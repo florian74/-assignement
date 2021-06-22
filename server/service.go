@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	adexp "github.com/florian74assignement/adexp"
+	adexp "github.com/florian74/assignement/adexp"
 
 	"github.com/go-redis/redis/v8"
 )

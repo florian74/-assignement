@@ -5,7 +5,7 @@ import (
 	"net"
 	"net/http"
 
-	server "assignement/server"
+	server "github.com/florian74/assignement/server"
 )
 
 func main() {
