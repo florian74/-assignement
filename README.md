@@ -99,3 +99,15 @@ The API should support Flight Plan filters on:
 
 The candidate must package his application using Docker.
 With the tooling of his choice the candidate must demonstrate that his server works as intended in steps 2.
+
+
+
+USAGE
+
+docker-compose build
+docker-compose up
+go run cmd/fplgen/main.go
+
+Check search on: 
+http://localhost:4201/flight/IfplId/R
+http://localhost:4201/flight/Adep/
